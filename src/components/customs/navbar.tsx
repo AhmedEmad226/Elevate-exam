@@ -5,10 +5,9 @@ import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { twJoin } from "tailwind-merge";
+import { usePathname } from "next/navigation";
 
 const navlinks = [
   {
@@ -20,29 +19,30 @@ const navlinks = [
     href: "/login",
   },
   {
-    title: "Sign up",
-    href: "/sign-up",
+    title: "Register",
+    href: "/register",
   },
 ];
 
 export function Navbar() {
+
+  const pathname = usePathname()
   return (
-    <header className="w-full bg-red-600">
-      <NavigationMenu className="bg-slate-900">
-        <NavigationMenuList className="p-10 flex justify-end items-center bg-slate-700">
-          {navlinks.map((link) => {
-            return (
-              <NavigationMenuItem>
-                <Link href={link.href} legacyBehavior passHref>
-                  <div className="bg-teal-400 text-black mx-5 rounded-md p-3">
-                    {link.title}
-                  </div>
-                </Link>
-              </NavigationMenuItem>
-            );
-          })}
+    <header className="relative w-full">
+      <NavigationMenu className="absolute top-[-10px] left-0 w-full flex justify-end p-5">
+        <NavigationMenuList className="flex">
+          {navlinks.map((link, index) => (
+            <NavigationMenuItem key={index}>
+              <Link href={link.href} legacyBehavior passHref>
+                <div className={`text-[#4461F2] mx-5 rounded-md font-bold p-2 my-3 cursor-pointer ${pathname == link.href && 'border border-[#E0E0E9]'}`}>
+                  {link.title}
+                </div>
+              </Link>
+            </NavigationMenuItem>
+          ))}
         </NavigationMenuList>
       </NavigationMenu>
     </header>
   );
+  
 }
