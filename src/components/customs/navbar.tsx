@@ -11,10 +11,6 @@ import { usePathname } from "next/navigation";
 
 const navlinks = [
   {
-    title: "Home",
-    href: "/",
-  },
-  {
     title: "Login",
     href: "/login",
   },

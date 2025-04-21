@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Navbar } from "@/components/customs/navbar";
-import {Poppins} from 'next/font/google'
+import { Poppins } from "next/font/google";
+import Providers from "@/components/providers";
 
 const geistSans = localFont({
   src: "/fonts/GeistVF.woff",
@@ -16,10 +16,10 @@ const geistMono = localFont({
 });
 
 const poppins = Poppins({
-  subsets:['latin'],
-  weight: ["700", '400'],
-  variable: '--font-poppins'
-})
+  subsets: ["latin"],
+  weight: ["700", "400"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
   title: "Exam App",
@@ -28,16 +28,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}>
-        <Navbar/>
-          {children}
-      
-      </body>
-    </html>
+    <>
+      {/* The App */}
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
+        >
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    </>
   );
 }
