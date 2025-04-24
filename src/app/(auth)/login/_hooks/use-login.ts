@@ -4,24 +4,24 @@ import { toast } from "sonner";
 
 export default function useLogin() {
   const { error, isPending, mutate } = useMutation({
-    mutationFn: async (feildData: LoginData) => {
+    mutationFn: async (fieldData: LoginData) => {
       const res = await signIn("credentials", {
         redirect: false,
         callbackUrl: "/",
-        email: feildData.email,
-        password: feildData.password,
+        email: fieldData.email,
+        password: fieldData.password,
       });
 
       if (res?.error) throw new Error(res.error);
       return res;
     },
-    onSuccess: (data) => {
-      toast.success('Logged in successfully!')
+    onSuccess: () => {
+      toast.success("Logged in successfully!");
       setTimeout(() => {
-        window.location.href = data?.url || "/dashboard";
-      },2000);
+        window.location.href = "/dashboard";
+      }, 2000);
     },
   });
 
-  return {error, isPending, login:mutate}
+  return { error, isPending, login: mutate };
 }

@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { CONTENT_TYPE } from "./lib/constants/api.constants";
 import GoogleProvider from "next-auth/providers/google";
 
-// 1- congfigure Nextauth options here
+// 1- configure Nextauth options here
 // 2- MUST create route 'handler' in src/app/api/auth/[...nextauth]/route.ts
 
 export const authOptions: NextAuthOptions = {
@@ -11,10 +11,9 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
-
-  //  adding the availble ways to login, providers like google, github; custome manually typing email or password
+  //  adding the available ways to login, providers like google, github; custom manually typing email or password
   providers: [
-    //  for custome Login
+    //  for custom Login
     Credentials({
       name: "credentials",
       credentials: {
@@ -60,21 +59,18 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     // it saves the data coming from the authorize() return then decode it into jwt code
     jwt: ({ token, user, profile, account }) => {
-      
       // !! NOTE: we Must check if there is user or profile or not !!
       // or jwt will replace their values with undefined
-      
-      if (profile) {
-          (token.user.email = profile.email || ""),
+
+      // decodes the data from the user (authorize's payload) then decoded it and save it to the token
+      if (user) {
+        token.token = user.token;
+        token.user = user.user;
+      } else if (profile) {
+        (token.user.email = profile.email || ""),
           (token.user.firstName = profile.given_name),
           (token.user.lastName = profile.family_name),
           (token.user.isVerified = profile.email_verified);
-      } 
-      
-      // decodes the data from the user (authorize's payload) then decoded it and sved iy to the token
-      else if (user) {
-        token.token = user.token;
-        token.user = user.user;
       }
 
       return token; //  must return the token to use it

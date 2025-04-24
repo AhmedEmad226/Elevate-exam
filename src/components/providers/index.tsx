@@ -10,7 +10,7 @@ export default function Providers({ children }: ProviderProps) {
   return (
     <ReactQueryProvider>
       <NextAuthProvider>
-        <Toaster richColors/>
+        <Toaster richColors position="top-center" />
         {children}
       </NextAuthProvider>
     </ReactQueryProvider>

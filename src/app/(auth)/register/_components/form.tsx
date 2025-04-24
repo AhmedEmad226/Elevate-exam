@@ -2,8 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { CONTENT_TYPE } from "@/lib/constants/api.constants";
-import { RegisterFeilds, registerSchema } from "@/lib/schemes/register-schema";
+import { RegisterFields, registerSchema } from "@/lib/schemes/register-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -18,10 +17,10 @@ import { LoaderCircle } from "lucide-react";
 import AlertError from "@/components/customs/alert-error";
 
 export default function RegisterForm() {
-  // mutatation
+  // mutation
 
   const { error, isPending, register } = useRegister();
-  const form = useForm<RegisterFeilds>({
+  const form = useForm<RegisterFields>({
     defaultValues: {
       username: "",
       firstName: "",
@@ -35,12 +34,12 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(data: RegisterData) {
-    register(data)
+    register(data);
   }
 
   return (
     <>
-    {error && <AlertError errorMessage={error.message}/>}
+      {error && <AlertError errorMessage={error.message} />}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="inputs">
           {/* Username */}

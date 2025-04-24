@@ -16,7 +16,7 @@ const authPages = new Set([
 ]);
 
 export default async function Middleware(req: NextRequest) {
-  // this way is Only avialable in ---Middleware--- and ---Route handlers---
+  // this way is Only available in ---Middleware--- and ---Route handlers---
   const token = await getToken({ req });
 
   if (privatePages.has(req.nextUrl.pathname) && token) {

@@ -1,5 +1,5 @@
 "use client";
-import { LoginFeilds, loginSchema } from "@/lib/schemes/auth.login-shema";
+import { LoginFields, loginSchema } from "@/lib/schemes/auth.login-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -21,7 +21,7 @@ export default function LoginForm() {
   const { error, isPending, login } = useLogin();
 
   // Form configuration
-  const form = useForm<LoginFeilds>({
+  const form = useForm<LoginFields>({
     defaultValues: {
       email: "",
       password: "",
@@ -30,8 +30,8 @@ export default function LoginForm() {
   });
 
   // Handle Submit
-  async function onSubmit(feildData: LoginData) {
-    login(feildData);
+  async function onSubmit(fieldData: LoginData) {
+    login(fieldData);
   }
 
   return (
@@ -57,7 +57,7 @@ export default function LoginForm() {
           <Input
             {...form.register("password")}
             type="password"
-            placeholder="Password"
+            placeholder="Enter Password"
             className="py-[15.86px] my-5 rounded-md shadow-sm border-2 ring-0 border-gray-300 hover:border-gray-400 focus:border-sky-600"
           />
           {form.formState.errors.password?.message && (
@@ -67,9 +67,12 @@ export default function LoginForm() {
           )}
 
           {/* Recover-password Link */}
-          <Link href="/recover-password" className="text-main self-end">
-            Recover Password?
-          </Link>
+          <div className="flex flex-wrap justify-start">
+            <p className="pr-1">Forgot password? </p>
+            <Link href="/forgot-password" className="text-main self-end">
+              Recover Password
+            </Link>
+          </div>
 
           {/* Submit Form */}
           {isPending ? (
