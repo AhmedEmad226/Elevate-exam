@@ -1,21 +1,12 @@
 import Image from "next/image";
-import profile from "@/assets/user-profile.png";
+import profile from "public/assets/user-profile.png";
 import { CircleCheck, Clock, FlagIcon } from "lucide-react";
-import StudentNavbar from "@/components/customs/student-navbar";
-import { cookies } from "next/headers";
-import { decode } from "next-auth/jwt";
+import StudentNavbar from "@/components/custom/student-navbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import FetchSubjects from "./_components/subjects";
 
 export default async function Page() {
-  // Getting token on server side
-  const cookieSession = cookies().get("next-auth.session-token")?.value;
-  const token = await decode({
-    secret: process.env.NEXTAUTH_SECRET!,
-    token: cookieSession,
-  });
-
   const session = await getServerSession(authOptions);
 
   return (
@@ -30,19 +21,13 @@ export default async function Page() {
           {/* User Profile */}
 
           <div className="p-3 size-[216px] relative">
-            <Image
-              src={profile}
-              alt="User's profile image"
-              className="object-cover"
-            />
+            <Image src={profile} alt="User's profile image" className="object-cover" />
           </div>
 
           {/* User Details */}
 
           <div className="w-[646px] p-5 flex flex-col">
-            <h2 className="text-2xl font-bold text-main mb-1">
-              {session ? session.user.username : "User name"}
-            </h2>
+            <h2 className="text-2xl font-bold text-main mb-1">{session ? session.user.username : "User name"}</h2>
             <p className="text-[#696F79] mb-3">Lorem ipsum dolor sit amet.</p>
             <div className="bg-[#F5F5F5] w-[619px] h-[12px] rounded-[30px]">
               <div className="w-[434px] h-[12px] rounded-[30px] bg-main"></div>
@@ -85,7 +70,7 @@ export default async function Page() {
             <span className="text-main cursor-pointer">View All</span>
           </div>
           <div className="flex flex-wrap w-full gap-[24px] justify-evenly">
-            <FetchSubjects token={token?.token!} />
+            <FetchSubjects />
           </div>
         </section>
       </main>
