@@ -1,4 +1,4 @@
-import { NextAuthOptions, User } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { CONTENT_TYPE } from "./lib/constants/api.constants";
 import GoogleProvider from "next-auth/providers/google";
@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
   //  callbacks is like doing logic in specific timing, like signing-in, creating jwt or redirecting
   callbacks: {
     // it saves the data coming from the authorize() return then decode it into jwt code
-    jwt: ({ token, user, profile, account }) => {
+    jwt: ({ token, user, profile }) => {
       // !! NOTE: we Must check if there is user or profile or not !!
       // or jwt will replace their values with undefined
 
@@ -67,10 +67,10 @@ export const authOptions: NextAuthOptions = {
         token.token = user.token;
         token.user = user.user;
       } else if (profile) {
-        (token.user.email = profile.email || ""),
-          (token.user.firstName = profile.given_name),
-          (token.user.lastName = profile.family_name),
-          (token.user.isVerified = profile.email_verified);
+        token.user.email = profile.email || "";
+        token.user.firstName = profile.given_name;
+        token.user.lastName = profile.family_name;
+        token.user.isVerified = profile.email_verified;
       }
 
       return token; //  must return the token to use it

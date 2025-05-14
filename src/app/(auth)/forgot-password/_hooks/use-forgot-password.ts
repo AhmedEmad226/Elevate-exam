@@ -6,7 +6,7 @@ export default function useForgotPassword() {
   const { isPending, error, mutate } = useMutation({
     mutationFn: async (fieldData: { email: string }) => {
       const res = await fetch(
-        "https://exam.elevateegy.com/api/v1/auth/forgotPassword",
+        "https://exam.elevateegy.com/api/v1/auth/forgotPassword", // This should be a server action
         {
           method: "POST",
           headers: {
